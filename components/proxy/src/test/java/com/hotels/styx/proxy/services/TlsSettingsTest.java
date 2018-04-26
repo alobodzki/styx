@@ -13,11 +13,14 @@
   See the License for the specific language governing permissions and
   limitations under the License.
  */
-package com.hotels.styx.api.service;
+package com.hotels.styx.proxy.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.hotels.styx.api.service.Certificate;
+import com.hotels.styx.api.service.TlsSettings;
+import com.hotels.styx.infrastructure.StyxAnnotationIntrospector;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -35,7 +38,7 @@ import static org.hamcrest.Matchers.is;
 
 public class TlsSettingsTest {
 
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper().setAnnotationIntrospector(new StyxAnnotationIntrospector());
 
     @BeforeMethod
     public void setUp() throws Exception {

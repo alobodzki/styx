@@ -29,6 +29,7 @@ import com.hotels.styx.client.applications.BackendServices.newBackendServices
 import com.hotels.styx.api.service.HealthCheckConfig.newHealthCheckConfigBuilder
 import com.hotels.styx.common.StyxFutures
 import com.hotels.styx.api.service.spi.Registry.Changes
+import com.hotels.styx.infrastructure.StyxAnnotationIntrospector
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.contains
 import org.mockito.Mockito.{mock, times, verify}
@@ -76,6 +77,7 @@ class FileBackedBackendServicesRegistrySpec extends FunSpec with Eventually {
   }
 
   val Mapper = new ObjectMapper(new YAMLFactory())
+  Mapper.setAnnotationIntrospector(new StyxAnnotationIntrospector());
 
   describe("A file backed backend services registry") {
     describe("reading yaml content") {

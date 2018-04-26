@@ -66,6 +66,7 @@ public final class YamlReader<T> {
 
     public YamlReader(Map<String, String> overrides) {
         this.overrides = checkNotNull(overrides);
+        MAPPER.setAnnotationIntrospector(new StyxAnnotationIntrospector());
     }
 
     public T read(byte[] content, TypeReference<T> typeReference) throws Exception {

@@ -23,6 +23,7 @@ import com.hotels.styx.api.HttpResponse;
 import com.hotels.styx.api.http.handlers.BaseHttpHandler;
 import com.hotels.styx.api.service.BackendService;
 import com.hotels.styx.api.service.spi.Registry;
+import com.hotels.styx.infrastructure.StyxAnnotationIntrospector;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.net.MediaType.JSON_UTF_8;
@@ -39,6 +40,7 @@ public class OriginsHandler extends BaseHttpHandler {
 
     public OriginsHandler(Registry<BackendService> backendServicesRegistry) {
         this.backendServicesRegistry = checkNotNull(backendServicesRegistry, "backendServicesRegistry cannot be null");
+        this.mapper.setAnnotationIntrospector(new StyxAnnotationIntrospector());
     }
 
     @Override

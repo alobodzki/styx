@@ -15,11 +15,11 @@
  */
 package com.hotels.styx.api.service;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
+import com.hotels.styx.api.service.annotations.StyxDeserialize;
+import com.hotels.styx.api.service.annotations.StyxPOJOBuilder;
+import com.hotels.styx.api.service.annotations.StyxProperty;
 
 import java.io.File;
 import java.util.Arrays;
@@ -36,7 +36,7 @@ import static java.util.Collections.emptySet;
 /**
  * SSL settings for a connection or pool.
  */
-@JsonDeserialize(builder = TlsSettings.Builder.class)
+@StyxDeserialize(builder = TlsSettings.Builder.class)
 public class TlsSettings {
 
     private static final String DEFAULT_TRUST_STORE_PATH = System.getProperty("java.home")
@@ -66,42 +66,42 @@ public class TlsSettings {
         return password == null ? "".toCharArray() : password.toCharArray();
     }
 
-    @JsonProperty("trustAllCerts")
+    @StyxProperty("trustAllCerts")
     public boolean trustAllCerts() {
         return trustAllCerts;
     }
 
-    @JsonProperty("authenticate")
+    @StyxProperty("authenticate")
     public boolean authenticate() {
         return !trustAllCerts;
     }
 
-    @JsonProperty("sslProvider")
+    @StyxProperty("sslProvider")
     public String sslProvider() {
         return sslProvider;
     }
 
-    @JsonProperty("addlCerts")
+    @StyxProperty("addlCerts")
     public Set<Certificate> additionalCerts() {
         return additionalCerts;
     }
 
-    @JsonProperty("trustStorePath")
+    @StyxProperty("trustStorePath")
     public String trustStorePath() {
         return trustStorePath;
     }
 
-    @JsonProperty("trustStorePassword")
+    @StyxProperty("trustStorePassword")
     public char[] trustStorePassword() {
         return trustStorePassword;
     }
 
-    @JsonProperty("protocols")
+    @StyxProperty("protocols")
     public List<String> protocols() {
         return protocols;
     }
 
-    @JsonProperty("cipherSuites")
+    @StyxProperty("cipherSuites")
     public List<String> cipherSuites() {
         return this.cipherSuites;
     }
@@ -147,7 +147,7 @@ public class TlsSettings {
     /**
      * The builder for SSL settings.
      */
-    @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "")
+    @StyxPOJOBuilder(buildMethodName = "build", withPrefix = "")
     public static final class Builder {
         private boolean trustAllCerts = true;
         private String sslProvider = DEFAULT_SSL_PROVIDER;
@@ -168,14 +168,14 @@ public class TlsSettings {
          * @param trustAllCerts
          * @return
          */
-        @JsonProperty("trustAllCerts")
+        @StyxProperty("trustAllCerts")
         @Deprecated
         public Builder trustAllCerts(boolean trustAllCerts) {
             this.trustAllCerts = trustAllCerts;
             return this;
         }
 
-        @JsonProperty("authenticate")
+        @StyxProperty("authenticate")
         public Builder authenticate(boolean authenticate) {
             this.trustAllCerts = !authenticate;
             return this;
@@ -187,7 +187,7 @@ public class TlsSettings {
          * @param sslProvider
          * @return
          */
-        @JsonProperty("sslProvider")
+        @StyxProperty("sslProvider")
         public Builder sslProvider(String sslProvider) {
             this.sslProvider = sslProvider;
             return this;
@@ -202,7 +202,7 @@ public class TlsSettings {
          * @param certificates
          * @return
          */
-        @JsonProperty("addlCerts")
+        @StyxProperty("addlCerts")
         public Builder additionalCerts(Certificate... certificates) {
             this.additionalCerts = Sets.newHashSet(certificates);
             return this;
@@ -215,25 +215,25 @@ public class TlsSettings {
          * @param trustStorePath
          * @return
          */
-        @JsonProperty("trustStorePath")
+        @StyxProperty("trustStorePath")
         public Builder trustStorePath(String trustStorePath) {
             this.trustStorePath = trustStorePath;
             return this;
         }
 
-        @JsonProperty("trustStorePassword")
+        @StyxProperty("trustStorePassword")
         public Builder trustStorePassword(String trustStorePwd) {
             this.trustStorePassword = trustStorePwd;
             return this;
         }
 
-        @JsonProperty("protocols")
+        @StyxProperty("protocols")
         public Builder protocols(List<String> protocols) {
             this.protocols = protocols;
             return this;
         }
 
-        @JsonProperty("cipherSuites")
+        @StyxProperty("cipherSuites")
         public Builder cipherSuites(List<String> cipherSuites) {
             this.cipherSuites = cipherSuites;
             return this;

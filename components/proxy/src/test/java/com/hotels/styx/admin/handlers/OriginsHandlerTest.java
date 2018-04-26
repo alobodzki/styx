@@ -21,6 +21,7 @@ import com.hotels.styx.api.messages.FullHttpResponse;
 import com.hotels.styx.api.service.BackendService;
 import com.hotels.styx.infrastructure.MemoryBackedRegistry;
 import com.hotels.styx.api.service.spi.Registry;
+import com.hotels.styx.infrastructure.StyxAnnotationIntrospector;
 import com.hotels.styx.proxy.backends.file.FileBackedBackendServicesRegistry;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -43,7 +44,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class OriginsHandlerTest {
-    static final ObjectMapper MAPPER = new ObjectMapper().disable(FAIL_ON_UNKNOWN_PROPERTIES);
+    static final ObjectMapper MAPPER = new ObjectMapper().disable(FAIL_ON_UNKNOWN_PROPERTIES).setAnnotationIntrospector(new StyxAnnotationIntrospector());
     static final String ORIGINS_FILE = fixturesHome() + "conf/origins/origins-for-jsontest.yml";
 
     final Iterable<BackendService> backendServices = loadFromPath(ORIGINS_FILE).get();

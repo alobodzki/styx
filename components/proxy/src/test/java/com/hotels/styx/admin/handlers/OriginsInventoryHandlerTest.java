@@ -27,6 +27,7 @@ import com.hotels.styx.api.client.RemoteHost;
 import com.hotels.styx.api.client.loadbalancing.spi.LoadBalancingMetricSupplier;
 import com.hotels.styx.api.messages.FullHttpResponse;
 import com.hotels.styx.client.StyxHostHttpClient;
+import com.hotels.styx.infrastructure.StyxAnnotationIntrospector;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -116,7 +117,7 @@ public class OriginsInventoryHandlerTest {
     }
 
     private static Map<Id, OriginsSnapshot> deserialiseJson(String json) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper().setAnnotationIntrospector(new StyxAnnotationIntrospector());
         MapType type = mapper.getTypeFactory().constructMapType(Map.class, Id.class, OriginsSnapshot.class);
         return mapper.readValue(json, type);
     }
