@@ -15,10 +15,10 @@
  */
 package com.hotels.styx.api.client;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.net.HostAndPort;
 import com.hotels.styx.api.Id;
+import com.hotels.styx.api.service.annotations.StyxCreator;
+import com.hotels.styx.api.service.annotations.StyxProperty;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -79,9 +79,9 @@ public class Origin implements Comparable<Origin> {
         this.hashCode = Objects.hash(this.applicationId, this.host, this.originId);
     }
 
-    @JsonCreator
-    Origin(@JsonProperty("id") String originId,
-           @JsonProperty("host") String host) {
+    @StyxCreator
+    Origin(@StyxProperty("id") String originId,
+           @StyxProperty("host") String host) {
         this.originId = Id.id(originId);
         this.host = HostAndPort.fromString(host);
         this.hostAsString = this.host.toString();
@@ -127,7 +127,7 @@ public class Origin implements Comparable<Origin> {
      *
      * @return host and port as string
      */
-    @JsonProperty("host")
+    @StyxProperty("host")
     public String hostAsString() {
         return this.hostAsString;
     }
@@ -150,7 +150,7 @@ public class Origin implements Comparable<Origin> {
         return this.originId;
     }
 
-    @JsonProperty("id")
+    @StyxProperty("id")
     String idAsString() {
         return originId.toString();
     }

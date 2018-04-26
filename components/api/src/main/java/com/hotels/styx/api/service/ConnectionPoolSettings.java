@@ -15,9 +15,9 @@
  */
 package com.hotels.styx.api.service;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hotels.styx.api.client.ConnectionPool;
+import com.hotels.styx.api.service.annotations.StyxCreator;
+import com.hotels.styx.api.service.annotations.StyxProperty;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -42,13 +42,13 @@ public class ConnectionPoolSettings implements ConnectionPool.Settings {
     private final int pendingConnectionTimeoutMillis;
     private final long connectionExpirationSeconds;
 
-    @JsonCreator
-    ConnectionPoolSettings(@JsonProperty("maxConnectionsPerHost") Integer maxConnectionsPerHost,
-                           @JsonProperty("maxPendingConnectionsPerHost") Integer maxPendingConnectionsPerHost,
-                           @JsonProperty("connectTimeoutMillis") Integer connectTimeoutMillis,
-                           @JsonProperty("socketTimeoutMillis") Integer socketTimeoutMillis,
-                           @JsonProperty("pendingConnectionTimeoutMillis") Integer pendingConnectionTimeoutMillis,
-                           @JsonProperty("connectionExpirationSeconds") Long connectionExpirationSeconds) {
+    @StyxCreator
+    ConnectionPoolSettings(@StyxProperty("maxConnectionsPerHost") Integer maxConnectionsPerHost,
+                           @StyxProperty("maxPendingConnectionsPerHost") Integer maxPendingConnectionsPerHost,
+                           @StyxProperty("connectTimeoutMillis") Integer connectTimeoutMillis,
+                           @StyxProperty("socketTimeoutMillis") Integer socketTimeoutMillis,
+                           @StyxProperty("pendingConnectionTimeoutMillis") Integer pendingConnectionTimeoutMillis,
+                           @StyxProperty("connectionExpirationSeconds") Long connectionExpirationSeconds) {
         this.maxConnectionsPerHost = firstNonNull(maxConnectionsPerHost, DEFAULT_MAX_CONNECTIONS_PER_HOST);
         this.maxPendingConnectionsPerHost = firstNonNull(maxPendingConnectionsPerHost, DEFAULT_MAX_PENDING_CONNECTIONS_PER_HOST);
         this.connectTimeoutMillis = firstNonNull(connectTimeoutMillis, DEFAULT_CONNECT_TIMEOUT_MILLIS);
@@ -92,37 +92,37 @@ public class ConnectionPoolSettings implements ConnectionPool.Settings {
     }
 
     @Override
-    @JsonProperty("socketTimeoutMillis")
+    @StyxProperty("socketTimeoutMillis")
     public int socketTimeoutMillis() {
         return socketTimeoutMillis;
     }
 
     @Override
-    @JsonProperty("connectTimeoutMillis")
+    @StyxProperty("connectTimeoutMillis")
     public int connectTimeoutMillis() {
         return connectTimeoutMillis;
     }
 
     @Override
-    @JsonProperty("maxConnectionsPerHost")
+    @StyxProperty("maxConnectionsPerHost")
     public int maxConnectionsPerHost() {
         return maxConnectionsPerHost;
     }
 
     @Override
-    @JsonProperty("maxPendingConnectionsPerHost")
+    @StyxProperty("maxPendingConnectionsPerHost")
     public int maxPendingConnectionsPerHost() {
         return maxPendingConnectionsPerHost;
     }
 
     @Override
-    @JsonProperty("pendingConnectionTimeoutMillis")
+    @StyxProperty("pendingConnectionTimeoutMillis")
     public int pendingConnectionTimeoutMillis() {
         return pendingConnectionTimeoutMillis;
     }
 
     @Override
-    @JsonProperty("connectionExpirationSeconds")
+    @StyxProperty("connectionExpirationSeconds")
     public long connectionExpirationSeconds() {
         return connectionExpirationSeconds;
     }

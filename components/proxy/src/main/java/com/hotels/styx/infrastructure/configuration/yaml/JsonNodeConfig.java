@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.hotels.styx.api.configuration.ConversionException;
 import com.hotels.styx.api.configuration.Configuration;
+import com.hotels.styx.infrastructure.StyxAnnotationIntrospector;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -39,7 +40,7 @@ import static java.util.Objects.requireNonNull;
 public class JsonNodeConfig implements Configuration {
     static final ObjectMapper YAML_MAPPER = new ObjectMapper(new YAMLFactory())
             .configure(FAIL_ON_UNKNOWN_PROPERTIES, false)
-            .configure(AUTO_CLOSE_SOURCE, true);
+            .configure(AUTO_CLOSE_SOURCE, true).setAnnotationIntrospector(new StyxAnnotationIntrospector());
 
     private final ObjectMapper mapper;
     private final JsonNode rootNode;

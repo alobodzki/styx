@@ -15,9 +15,9 @@
  */
 package com.hotels.styx.api.client;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hotels.styx.api.Id;
+import com.hotels.styx.api.service.annotations.StyxCreator;
+import com.hotels.styx.api.service.annotations.StyxProperty;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -40,11 +40,11 @@ public final class OriginsSnapshot {
     private final Set<Origin> disabledOrigins;
     private final Map<Id, Origin> allOriginsById = new HashMap<>();
 
-    @JsonCreator
-    OriginsSnapshot(@JsonProperty("appId") String appId,
-                    @JsonProperty("activeOrigins") Collection<Origin> activeOrigins,
-                    @JsonProperty("inactiveOrigins") Collection<Origin> inactiveOrigins,
-                    @JsonProperty("disabledOrigins") Collection<Origin> disabledOrigins) {
+    @StyxCreator
+    OriginsSnapshot(@StyxProperty("appId") String appId,
+                    @StyxProperty("activeOrigins") Collection<Origin> activeOrigins,
+                    @StyxProperty("inactiveOrigins") Collection<Origin> inactiveOrigins,
+                    @StyxProperty("disabledOrigins") Collection<Origin> disabledOrigins) {
         this.appId = id(appId);
         this.activeOrigins = withAppId(activeOrigins, appId);
         this.inactiveOrigins = withAppId(inactiveOrigins, appId);
@@ -99,7 +99,7 @@ public final class OriginsSnapshot {
         return appId;
     }
 
-    @JsonProperty("appId")
+    @StyxProperty("appId")
     String appIdAsString() {
         return appId.toString();
     }
@@ -109,7 +109,7 @@ public final class OriginsSnapshot {
      *
      * @return active origins
      */
-    @JsonProperty("activeOrigins")
+    @StyxProperty("activeOrigins")
     public Set<Origin> activeOrigins() {
         return activeOrigins;
     }
@@ -119,7 +119,7 @@ public final class OriginsSnapshot {
      *
      * @return inactive origins
      */
-    @JsonProperty("inactiveOrigins")
+    @StyxProperty("inactiveOrigins")
     public Set<Origin> inactiveOrigins() {
         return inactiveOrigins;
     }
@@ -129,7 +129,7 @@ public final class OriginsSnapshot {
      *
      * @return disabled origins
      */
-    @JsonProperty("disabledOrigins")
+    @StyxProperty("disabledOrigins")
     public Set<Origin> disabledOrigins() {
         return disabledOrigins;
     }

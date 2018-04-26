@@ -23,6 +23,7 @@ import com.hotels.styx.api.Resource;
 import com.hotels.styx.client.applications.ApplicationsProvider;
 import com.hotels.styx.api.service.BackendService;
 import com.hotels.styx.client.applications.BackendServices;
+import com.hotels.styx.infrastructure.StyxAnnotationIntrospector;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,7 +39,7 @@ import static java.lang.String.format;
  *
  */
 public class YamlApplicationsProvider implements ApplicationsProvider {
-    private static final ObjectMapper MAPPER = new ObjectMapper(new YAMLFactory());
+    private static final ObjectMapper MAPPER = new ObjectMapper(new YAMLFactory()).setAnnotationIntrospector(new StyxAnnotationIntrospector());
     private static final CollectionType TYPE = MAPPER.getTypeFactory().constructCollectionType(List.class, BackendService.class);
 
     private final BackendServices backendServices;

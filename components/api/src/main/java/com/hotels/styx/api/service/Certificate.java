@@ -16,8 +16,8 @@
 package com.hotels.styx.api.service;
 
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.hotels.styx.api.service.annotations.StyxCreator;
+import com.hotels.styx.api.service.annotations.StyxProperty;
 
 import java.util.Objects;
 
@@ -31,9 +31,9 @@ public class Certificate {
     private String alias;
     private String certificatePath;
 
-    @JsonCreator
-    Certificate(@JsonProperty("alias") String alias,
-                @JsonProperty("path") String certificatePath) {
+    @StyxCreator
+    Certificate(@StyxProperty("alias") String alias,
+                @StyxProperty("path") String certificatePath) {
         this.alias = checkNotNull(alias);
         this.certificatePath = checkNotNull(certificatePath);
     }

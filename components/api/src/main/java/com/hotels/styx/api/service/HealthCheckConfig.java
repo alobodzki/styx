@@ -15,10 +15,10 @@
  */
 package com.hotels.styx.api.service;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.hotels.styx.api.service.annotations.StyxDeserialize;
+import com.hotels.styx.api.service.annotations.StyxIgnore;
+import com.hotels.styx.api.service.annotations.StyxPOJOBuilder;
+import com.hotels.styx.api.service.annotations.StyxProperty;
 
 import java.net.URI;
 import java.util.Objects;
@@ -33,7 +33,7 @@ import static java.lang.String.format;
 /**
  * Configuration for health-checking.
  */
-@JsonDeserialize(builder = HealthCheckConfig.Builder.class)
+@StyxDeserialize(builder = HealthCheckConfig.Builder.class)
 public final class HealthCheckConfig {
     public static final int DEFAULT_HEALTHY_THRESHOLD_VALUE = 2;
     public static final int DEFAULT_UNHEALTHY_THRESHOLD_VALUE = 2;
@@ -108,7 +108,7 @@ public final class HealthCheckConfig {
         return uri;
     }
 
-    @JsonProperty("uri")
+    @StyxProperty("uri")
     String getUri() {
         return uri.orElse(null);
     }
@@ -118,27 +118,27 @@ public final class HealthCheckConfig {
      *
      * @return health check interval
      */
-    @JsonProperty("intervalMillis")
+    @StyxProperty("intervalMillis")
     public long intervalMillis() {
         return intervalMillis;
     }
 
-    @JsonProperty("timeoutMillis")
+    @StyxProperty("timeoutMillis")
     public long timeoutMillis() {
         return timeoutMillis;
     }
 
-    @JsonProperty("healthyThreshold")
+    @StyxProperty("healthyThreshold")
     public int healthyThreshold() {
         return healthyThreshold;
     }
 
-    @JsonProperty("unhealthyThreshold")
+    @StyxProperty("unhealthyThreshold")
     public int unhealthyThreshold() {
         return unhealthyThreshold;
     }
 
-    @JsonIgnore
+    @StyxIgnore
     public boolean isEnabled() {
         return uri.isPresent();
     }
@@ -197,7 +197,7 @@ public final class HealthCheckConfig {
     /**
      * A builder of {@link HealthCheckConfig}s.
      */
-    @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "")
+    @StyxPOJOBuilder(buildMethodName = "build", withPrefix = "")
     public static final class Builder {
         private Optional<String> uri = Optional.empty();
         private Optional<Long> intervalMillis = Optional.empty();
@@ -221,7 +221,7 @@ public final class HealthCheckConfig {
          * @param uri a URI
          * @return this builder
          */
-        @JsonProperty("uri")
+        @StyxProperty("uri")
         public Builder uri(String uri) {
             return uri(Optional.ofNullable(uri));
         }
@@ -243,7 +243,7 @@ public final class HealthCheckConfig {
          * @param interval interval in milliseconds
          * @return this builder
          */
-        @JsonProperty("intervalMillis")
+        @StyxProperty("intervalMillis")
         public Builder interval(long interval) {
             return interval(interval, TimeUnit.MILLISECONDS);
         }
@@ -266,7 +266,7 @@ public final class HealthCheckConfig {
          * @param timeout timeout in milliseconds
          * @return this builder
          */
-        @JsonProperty("timeoutMillis")
+        @StyxProperty("timeoutMillis")
         public Builder timeout(long timeout) {
             return timeout(timeout, TimeUnit.MILLISECONDS);
         }
@@ -289,7 +289,7 @@ public final class HealthCheckConfig {
          * @param healthyThreshold the number of healthy results
          * @return this builder
          */
-        @JsonProperty("healthyThreshold")
+        @StyxProperty("healthyThreshold")
         public Builder healthyThreshold(int healthyThreshold) {
             this.healthyThreshold = Optional.of(healthyThreshold);
             return this;
@@ -301,7 +301,7 @@ public final class HealthCheckConfig {
          * @param unhealthyThreshold the number of unhealthy results
          * @return this builder
          */
-        @JsonProperty("unhealthyThreshold")
+        @StyxProperty("unhealthyThreshold")
         public Builder unhealthyThreshold(int unhealthyThreshold) {
             this.unhealthyThreshold = Optional.of(unhealthyThreshold);
             return this;

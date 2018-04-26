@@ -27,6 +27,7 @@ import com.hotels.styx.api.client.OriginsChangeListener;
 import com.hotels.styx.api.client.OriginsSnapshot;
 import com.hotels.styx.api.http.handlers.BaseHttpHandler;
 import com.hotels.styx.client.origincommands.GetOriginsInventorySnapshot;
+import com.hotels.styx.infrastructure.StyxAnnotationIntrospector;
 import org.slf4j.Logger;
 
 import java.util.Map;
@@ -46,7 +47,7 @@ public class OriginsInventoryHandler extends BaseHttpHandler implements OriginsC
     private static final Logger LOG = getLogger(OriginsInventoryHandler.class);
 
     private final ObjectMapper mapper = new ObjectMapper().disable(FAIL_ON_EMPTY_BEANS)
-            .setDefaultPrettyPrinter(PRETTY_PRINTER);
+            .setDefaultPrettyPrinter(PRETTY_PRINTER).setAnnotationIntrospector(new StyxAnnotationIntrospector());
 
     private final Map<Id, OriginsSnapshot> originsInventorySnapshotMap = new ConcurrentHashMap<>();
 

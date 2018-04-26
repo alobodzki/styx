@@ -30,8 +30,10 @@ import com.hotels.styx.proxy.backends.file.FileChangeMonitor.FileMonitorSettings
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Predicate;
 
 import static com.google.common.base.Objects.toStringHelper;
 import static com.google.common.base.Throwables.propagate;
@@ -40,6 +42,8 @@ import static com.hotels.styx.client.applications.BackendServices.newBackendServ
 import static com.hotels.styx.api.service.spi.Registry.Outcome.FAILED;
 import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 
 /**
  * File backed {@link BackendService} registry.
@@ -190,8 +194,20 @@ public class FileBackedBackendServicesRegistry extends AbstractStyxService imple
         }
 
         private BackendServices readBackendServices(byte[] content) throws Exception {
-            return newBackendServices(delegate.read(content, new TypeReference<List<BackendService>>() {
-            }));
+            List<BackendService> read = delegate.read(content, new TypeReference<List<BackendService>>() {});
+            return newBackendServices(read);
+        }
+    }
+
+    @VisibleForTesting
+    static class RejectDuplicatePaths implements Predicate<Collection<BackendService>> {
+        @Override
+        public boolean test(Collection<BackendService> backendServices) {
+            return backendServices.stream()
+                    .collect(groupingBy(BackendService::path, counting()))
+                    .values()
+                    .stream()
+                    .noneMatch(count -> count > 1);
         }
     }
 

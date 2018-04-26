@@ -15,9 +15,9 @@
  */
 package com.hotels.styx.api.service;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ImmutableList;
+import com.hotels.styx.api.service.annotations.StyxCreator;
+import com.hotels.styx.api.service.annotations.StyxProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,9 +47,9 @@ public class RewriteConfig implements RewriteRule {
      * @param urlPattern  URL pattern to match
      * @param replacement replacement for URL that can contain placeholders like $1, $2... for captured groups
      */
-    @JsonCreator
-    public RewriteConfig(@JsonProperty("urlPattern") String urlPattern,
-                         @JsonProperty("replacement") String replacement) {
+    @StyxCreator
+    public RewriteConfig(@StyxProperty("urlPattern") String urlPattern,
+                         @StyxProperty("replacement") String replacement) {
         this.urlPattern = urlPattern;
         this.replacement = replacement;
 
@@ -57,12 +57,12 @@ public class RewriteConfig implements RewriteRule {
         this.preprocessedReplacement = new Replacement(replacement);
     }
 
-    @JsonProperty("urlPattern")
+    @StyxProperty("urlPattern")
     public String urlPattern() {
         return urlPattern;
     }
 
-    @JsonProperty("replacement")
+    @StyxProperty("replacement")
     public String replacement() {
         return replacement;
     }

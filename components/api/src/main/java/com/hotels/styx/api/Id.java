@@ -15,8 +15,8 @@
  */
 package com.hotels.styx.api;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
+import com.hotels.styx.api.service.annotations.StyxProperty;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -38,7 +38,7 @@ public final class Id {
      * @param value string value of Id
      * @return a new Id
      */
-    @JsonProperty("id")
+    @StyxProperty("id")
     public static Id id(String value) {
         return new Id(value);
     }

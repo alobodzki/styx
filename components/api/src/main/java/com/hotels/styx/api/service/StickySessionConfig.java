@@ -15,9 +15,9 @@
  */
 package com.hotels.styx.api.service;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
+import com.hotels.styx.api.service.annotations.StyxCreator;
+import com.hotels.styx.api.service.annotations.StyxProperty;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -38,9 +38,9 @@ public class StickySessionConfig {
         this(false, TWELVE_HOURS);
     }
 
-    @JsonCreator
-    StickySessionConfig(@JsonProperty("enabled") boolean enabled,
-                        @JsonProperty("timeoutSeconds") Integer timeoutSeconds) {
+    @StyxCreator
+    StickySessionConfig(@StyxProperty("enabled") boolean enabled,
+                        @StyxProperty("timeoutSeconds") Integer timeoutSeconds) {
         this.enabled = enabled;
         this.timeoutSeconds = Optional.ofNullable(timeoutSeconds).orElse(TWELVE_HOURS);
     }
@@ -57,12 +57,12 @@ public class StickySessionConfig {
         this(builder.enabled, builder.timeoutSeconds);
     }
 
-    @JsonProperty("enabled")
+    @StyxProperty("enabled")
     public boolean stickySessionEnabled() {
         return enabled;
     }
 
-    @JsonProperty("timeoutSeconds")
+    @StyxProperty("timeoutSeconds")
     public int stickySessionTimeoutSeconds() {
         return timeoutSeconds;
     }
